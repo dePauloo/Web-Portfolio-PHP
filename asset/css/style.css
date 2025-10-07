@@ -26,9 +26,24 @@ nav{
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #080808; /* transparan */
+  padding: 10px 10%;
+  z-index: 1000;
+  transition: background 0.3s;
 }
+#header,
+#about,
+#services,
+#portfolio,
+#Contact {
+  scroll-margin-top: 40px;
 .logo{
   width: 140px;
+}
 }
 nav ul li{
   display: inline-block;
@@ -54,6 +69,9 @@ nav ul li a::after{
 nav ul li a:hover::after{
   width: 100%;
 }
+nav ul li a.active::after {
+  width: 100%;
+}
 .header-text{
   margin-top: 30%;
   font-size: 30px;
@@ -68,7 +86,7 @@ nav ul li a:hover::after{
 
 /* -------------------- about -------------------- */
 #about{
-  padding: 80px 0;
+  padding: 120px 0;
   color: #ababab;
 }
 .row{
@@ -132,7 +150,7 @@ nav ul li a:hover::after{
 
 /* -------------------- services -------------------- */
 #services{
-  padding: 30px 0;
+  padding: 200px 0;
 }
 .services-list{
   display: grid;
@@ -171,7 +189,7 @@ nav ul li a:hover::after{
 
 /* -------------------- portfolio -------------------- */
 #portfolio{
-  padding: 50px 0;
+  padding: 120px 0;
 }
 .work-list{
   display: grid;
@@ -356,9 +374,12 @@ nav .fa-solid{
     cursor: pointer;
   }
   .sub-title{
+    padding: 10px;
     font-size: 40px;
+ 
   }
   .about-col-1, .about-col-2{
+    padding: 0px, 0;
     flex-basis: 100%;
   }
   .about-col-1{
@@ -370,8 +391,10 @@ nav .fa-solid{
   .tab-links{
     font-size: 16px;
     margin-right: 20px;
+    margin-bottom: 5px;
   }
   .contact-left, .contact-right{
+    margin-top: 62px;
     flex-basis: 100%;
   }
   .copyright{
@@ -387,8 +410,8 @@ nav .fa-solid{
 .chart-container {
   width: 100%;
   max-width: 500px;
-  margin: 40px auto;
+  margin: 20px auto;
   background: #1a1a1a;
-  padding: 20px;
-  border-radius: 15px;
+  padding: 10px;
+  border-radius: 20px;
 }
