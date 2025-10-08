@@ -78,19 +78,30 @@ function closemenu() {
 }
 
 // -------------------- Google Sheet Form (W3Schools Example) --------------------
-const scriptURL =
+/*const scriptURL =
   "https://script.google.com/macros/s/AKfycbwu7_lHRLxnEcCCCkfv8osN0tiSZl62_iuFyg5RKG-rzHarX4mhY2-gJgDYtVVKXa_e/exec";
-const form = document.forms["submit-to-google-sheet"];
+const form = document.forms["submit-to-google-sheet"];*/
+const form = document.getElementById("contact-form");
 const msg = document.getElementById("msg");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  fetch(scriptURL, { method: "POST", body: new FormData(form) })
-    .then((response) => {
-      msg.innerHTML = "Message sent successfully ✅";
-      msg.style.color = "lightgreen";
+
+  fetch("contact.php", {
+    method: "POST",
+    body: new FormData(form),
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      if (data.trim() === "success") {
+        msg.innerHTML = "Message sent successfully ✅";
+        msg.style.color = "lightgreen";
+        form.reset();
+      } else {
+        msg.innerHTML = "Error sending message ❌";
+        msg.style.color = "red";
+      }
       setTimeout(() => (msg.innerHTML = ""), 5000);
-      form.reset();
     })
     .catch((error) => {
       msg.innerHTML = "Error sending message ❌";

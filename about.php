@@ -6,8 +6,21 @@
             </div>
             <div class="about-col-2">
                 <h1 class="sub-title">About Me</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.</p>
+                <?php include("koneksi.php"); 
+                            $sql = "SELECT tentang FROM aboutme";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                              // output data of each row
+                              while($row = $result->fetch_assoc()) {
+                           
+                                echo '<p><span>'.$row["tentang"].'</p>';
+                              }
+                            } 
+
+                            $conn->close();
+                            ?>
+
                 <div class="tab-titles">
                     <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
                     <p class="tab-links" onclick="opentab('experience')">Experience</p>
@@ -16,20 +29,56 @@
                 </div>
                 <div class="tab-contents active-tab" id="skills">
                     <ul>
-                        <li><span>CAD</span><br>Designing 2D and 3D Model</li>
-                        <li><span>CAM</span><br>Automate and Control Machine Using Software</li>
-                        <li><span>Electrical</span><br>Electrical Maintenance</li>
+                    <?php include("koneksi.php"); 
+                            $sql = "SELECT skill, keterangan FROM skills";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                              // output data of each row
+                              while($row = $result->fetch_assoc()) {
+                           
+                                echo '<li><span>'.$row["skill"].'</span><br>'. $row["keterangan"].'</li>';
+                              }
+                            } 
+
+                            $conn->close();
+                            ?>
                     </ul>
                 </div>
                 <div class="tab-contents" id="experience">
                     <ul>
-                        <li><span>2022</span><br>Internship at Production Unit Mikael Vocational High School</li>
+                    <?php include("koneksi.php"); 
+                            $sql = "SELECT tahun, pengalaman FROM experience";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                              // output data of each row
+                              while($row = $result->fetch_assoc()) {
+                           
+                                echo '<li><span>'.$row["tahun"].'</span><br>'. $row["pengalaman"].'</li>';
+                              }
+                            } 
+
+                            $conn->close();
+                            ?>
                     </ul>
                 </div>
                 <div class="tab-contents" id="education">
                     <ul>
-                        <li><span>2026</span><br>Diplom Engineering from ATMI Polytechnic</li>
-                        <li><span>2023</span><br>Vocational High School</li>
+                    <?php include("koneksi.php"); 
+                            $sql = "SELECT tahunn, institusi FROM education";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                              // output data of each row
+                              while($row = $result->fetch_assoc()) {
+                           
+                                echo '<li><span>'.$row["tahunn"].'</span><br>'. $row["institusi"].'</li>';
+                              }
+                            } 
+
+                            $conn->close();
+                            ?>
                     </ul>
                 </div>
                 <div class="tab-contents" id="graphic">
