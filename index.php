@@ -1,8 +1,3 @@
-<?php
-include 'koneksi.php';
-include 'service.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +7,7 @@ include 'service.php';
     <title>Deogratsias Jevon</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/16b2a527f8.js" crossorigin="anonymous"></script>
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -32,7 +28,7 @@ include 'service.php';
             </nav>
             <div class="header-text">
                 <p>Mechatronics Engineer</p>
-                <h1>Hi, I'm Deogratsias<br><span>Jevon</span> From Indonesia</h1>
+                <h1> Hi, I'm Deogratsias<br><span>Jevon</span> From Indonesia</h1>
             </div>
         </div>
     </div>
@@ -76,6 +72,7 @@ include 'service.php';
                         <ul>
                             <li><span>Skill Chart</span><br>Visual Representation of Technical Abilities</li>
                         </ul>
+                        <!-- Tempatkan radar chart di sini -->
                         <div class="chart-container">
                             <canvas id="skillRadarChart"></canvas>
                         </div>
@@ -87,7 +84,32 @@ include 'service.php';
 
     <!-- -------------------- services -------------------- -->
     <div id="services">
-        <?php showServices(); ?>
+        <div class="container">
+            <h1 class="sub-title">My Services</h1>
+            <div class="services-list">
+                <div>
+                    <i class="fa-solid fa-compass-drafting"></i>
+                    <h2>CAD Project</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.</p>
+                    <a href="#">Learn more</a>
+                </div>
+                <div>
+                    <i class="fa-solid fa-desktop"></i>
+                    <h2>CAM Project</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.</p>
+                    <a href="#">Learn more</a>
+                </div>
+                <div>
+                    <i class="fa-solid fa-bolt"></i>
+                    <h2>Electrical Project</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.</p>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- -------------------- portfolio -------------------- -->
@@ -136,8 +158,11 @@ include 'service.php';
                     <p><i class="fa-solid fa-phone"></i> +62 812 2784 1975</p>
                     <div class="social-icons">
                         <a href="https://line.me/ti/p/alamf8mirM"><i class="fa-brands fa-line"></i></a>
-                        <a href="https://www.instagram.com/vdepauloo"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/deogratsias-jevon-ivander-arethusa"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/vdepauloo?igsh=MTMwamc1M2lqYXowaw=="><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a
+                            href="https://www.linkedin.com/in/deogratsias-jevon-ivander-arethusa-0b1676284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                                class="fa-brands fa-linkedin"></i></a>
                     </div>
                     <a href="img/CV Example.pdf" download class="btn btn2">Download CV</a>
                 </div>
@@ -158,4 +183,5 @@ include 'service.php';
     </div>
     <script src="js/script.js"></script>
 </body>
+
 </html>
