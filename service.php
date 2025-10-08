@@ -1,6 +1,4 @@
-<?php
-function showServices() {
-    echo '
+<div id="services">
     <div class="container">
         <h1 class="sub-title">My Services</h1>
         <div class="services-list">
@@ -26,6 +24,5 @@ function showServices() {
                 <a href="#">Learn more</a>
             </div>
         </div>
-    </div>';
-}
-?>
+    </div>
+</div>
