@@ -7,7 +7,49 @@ navLinks.forEach(link => {
       link.classList.add('active');
     });
   });
+
+
+// -------------------- ScrollSpy + Scroll Bawah ke Contact --------------------
+window.addEventListener("scroll", () => {
+  const sections = document.querySelectorAll("section, div[id]");
+  const scrollPos = window.scrollY + 150; // offset agar aktif di tengah layar
+  const navLinks = document.querySelectorAll("nav ul li a");
+
+  let foundActive = false;
+
+  sections.forEach((section) => {
+    if (!section.id) return;
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+
+    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${section.id}`) {
+          link.classList.add("active");
+          foundActive = true;
+        }
+      });
+    }
+  });
+
   
+  // Jika sudah scroll mentok paling bawah, paksa active ke #contact
+  if (
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 10
+  ) {
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#Contact") {
+        link.classList.add("active");
+      }
+    });
+  } else if (!foundActive) {
+    // Jika belum ada section terdeteksi, reset
+    navLinks.forEach((link) => link.classList.remove("active"));
+  }
+});
+
 // -------------------- Tab Control --------------------
 var tablinks = document.getElementsByClassName("tab-links");
 var tabcontents = document.getElementsByClassName("tab-contents");
