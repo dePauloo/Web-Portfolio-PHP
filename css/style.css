@@ -409,7 +409,8 @@ nav .fa-solid{
 /* -------------------- radar chart styling -------------------- */
 .chart-container {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
+  height: 465px;
   margin: 20px auto;
   background: #1a1a1a;
   padding: 10px;

@@ -109,40 +109,137 @@ form.addEventListener("submit", (e) => {
     });
 });
 
-// -------------------- Chart Radar Initialization --------------------
-function initChart() {
-  const ctx = document.getElementById("skillRadarChart");
-  new Chart(ctx, {
-    type: "radar",
+// -------------------- Chart Radar Initialization -------------------- //
+const CHART_DATA_URL = 'chart-data.php';
+const POLL_INTERVAL_MS = 100;
+
+let radarChart = null;
+let lastLabels = [];
+let lastValues = [];
+
+function arraysEqual(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b)) return false;
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+async function fetchChartData() {
+  try {
+    const res = await fetch(CHART_DATA_URL, { cache: 'no-store' });
+    if (!res.ok) {
+      console.error('Failed to fetch chart data', res.status);
+      return null;
+    }
+    const json = await res.json();
+    if (!json || !Array.isArray(json.labels) || !Array.isArray(json.values)) {
+      console.error('Invalid chart data format', json);
+      return null;
+    }
+    return { labels: json.labels, values: json.values };
+  } catch (err) {
+    console.error('Error fetching chart data', err);
+    return null;
+  }
+}
+
+function createRadarChart(ctx, labels, values) {
+  if (!ctx) return;
+  const config = {
+    type: 'radar',
     data: {
-      labels: ["CAD", "CAM", "Electrical Maintenance", "Programming", "Electrical Drawing"],
-      datasets: [
-        {
-          label: "Skill Level",
-          data: [90, 90, 85, 60, 80],
-          fill: true,
-          backgroundColor: "rgba(255, 0, 79, 0.2)",
-          borderColor: "#ff004f",
-          pointBackgroundColor: "#ff004f",
-          borderWidth: 2,
-        },
-      ],
+      labels: labels,
+      datasets: [{
+        //label: 'Skill Level',
+        data: values,
+        fill: true,
+        backgroundColor: 'rgba(255, 0, 79, 0.2)',
+        borderColor: '#ff004f',
+        pointBackgroundColor: '#ff004f',
+        borderWidth: 2
+      }]
     },
     options: {
+      animations: false,
+      responsive: true,
+      // maintainAspectRatio: false,
+      /*scales: {
+        r: {
+          angleLines: { color: '#444' },
+          grid: { color: '#666' },
+          pointLabels: { color: '#fff', font: { size: 14 } },
+          suggestedMin: 0,
+          suggestedMax: 100
+        }
+      },*/
       scales: {
         r: {
-          angleLines: { color: "#444" },
-          grid: { color: "#666" },
-          pointLabels: { color: "#fff", font: { size: 14 } },
+          angleLines: { color: '#444' },
+          grid: { color: '#666' },
+          pointLabels: { color: '#fff', font: { size: 14 } },
           suggestedMin: 0,
           suggestedMax: 100,
-        },
-      },
+          ticks: {
+            display: false
+          }
+        }
+      },     
       plugins: {
         legend: {
-          labels: { color: "#fff" },
-        },
-      },
-    },
-  });
+          display: false
+          //labels: { color: '#fff' }
+        }
+      }
+    }
+  };
+
+  return new Chart(ctx, config);
+}
+
+async function initPolling() {
+  const canvas = document.getElementById('skillRadarChart');
+  if (!canvas) {
+    console.error('Canvas #skillRadarChart not found in DOM.');
+    return;
+  }
+  const ctx = canvas.getContext('2d');
+
+  const initial = await fetchChartData();
+  const initialLabels = initial ? initial.labels : ['CAD','CAM','Electrical Maintenance','Programming','Electrical Drawing'];
+  const initialValues = initial ? initial.values : [90,90,85,60,80];
+
+  radarChart = createRadarChart(ctx, initialLabels, initialValues);
+  lastLabels = Array.from(initialLabels);
+  lastValues = Array.from(initialValues);
+
+  setInterval(async () => {
+    const data = await fetchChartData();
+    if (!data) return;
+
+    const { labels, values } = data;
+
+    if (arraysEqual(labels, lastLabels) && arraysEqual(values, lastValues)) {
+      return;
+    }
+
+    radarChart.data.labels = labels;
+    radarChart.data.datasets[0].data = values;
+
+    try {
+      radarChart.update('none');
+    } catch (e) {
+      radarChart.update({ duration: 0, lazy: false });
+    }
+
+    lastLabels = Array.from(labels);
+    lastValues = Array.from(values);
+  }, POLL_INTERVAL_MS);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPolling);
+} else {
+  initPolling();
 }
